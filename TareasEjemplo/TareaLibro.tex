@@ -1,0 +1,111 @@
+\documentclass{ejercicios}
+
+\begin{document}
+
+\tableofcontents
+\clearpage
+
+\begin{exercise}
+  Sea $\varphi\in \mathcal{C}([a,b],\mathbb{R})$ tal que $\varphi(a) = x_a$ y $\varphi(b) = x_b$. Determine una función $\hat{x}\in\hat{\mathcal{D}} = \{\hat{x}\in\mathcal{P}\mathcal{C}^1([a,b],\mathbb{R}):\hat{x}(a) = x_a$ y $\hat{x}(b) = x_b\}$ con la propiedad de que la región $\Omega$ limitada por las curvas de las gráficas de las funciones $\varphi$ y $\hat{x}$ sea máxima, tomando en consideración el supuesto de que la longitud de la curva $\hat{x}$ es una constante $l>0$.
+
+\end{exercise}
+
+\begin{solution}
+  Primero identifiquemos que el funcional que vamos a trabajar esla dado en realidad por 
+  \[\Omega[\hat{x}] = \int_{a}^{b}\rvert\varphi(t) - \hat{x}(t)\lvert\,dt\]
+  además como el problema nos dice que la longitud de la curva $\hat{x}$ es una constante $l>0$ entonces tenemos la condición 
+  \[G[x] = \int_{a}^{b}\left(\sqrt{1 + (\dot{x}')^2} - \frac{l}{b-a}\right)\,dt = 0\]
+  asi con esto en mente podemos buscar los valores máximos de 
+  \[
+  \begin{aligned}
+    & \hat{F}(\hat{x}) = \lambda_0\Omega[{\hat{x}}] + \lambda_1 G[\hat{x}]\\ 
+    & = \int_{a}^{b}\left(\lambda_0\lvert\varphi - \hat{x}\rvert + \lambda_1\sqrt{1 + (\hat{x}')^2} - \frac{l}{b-a}\right)\,dt
+  \end{aligned}
+  \]
+  e identifiquemos $\hat{L} = \lambda_0\lvert\varphi - \hat{x}\rvert + \lambda_1\sqrt{1 + (\hat{x}')^2} - \frac{l}{b-a}$ ahora de la nueva \textbf{ecuación de Euler-Lagrange} se tiene que 
+  \[
+    0 = \frac{\partial\hat{L}}{\partial{\hat{x}}}-\frac{d}{\,dt}\frac{\partial\hat{L}}{\partial{\dot{\hat{x}}}} =  \lambda_0sign(\varphi - \hat{x}) - \lambda_1\frac{d}{\,dt}\left(\frac{\dot{\hat{x}}}{\sqrt{1 + \dot{\hat{x}}}}\right)
+  \]
+  de aqui si $\lambda_1 \neq 0$ definamos $\lambda = \frac{\lambda_0}{\lambda_1}$
+\[\frac{\dot{\hat{x}}}{\sqrt{1 + \dot{\hat{x}}}} = \lambda\int sign(\varphi - \hat{x})\,dt\]
+  ahora observemos que 
+  \[
+    \int sign(\varphi - \hat{x})\,dt = 
+  \begin{cases}
+    1 & \text{si } \varphi - \hat{x} > 0 \\ 
+    0 & \text{si } \varphi - \hat{x} = 0 \\ 
+    -1 & \text{si } \varphi - \hat{x} < 0
+  \end{cases}
+  \]
+  veamos los casos 
+  \begin{enumerate}
+    \item $\varphi > \hat{x}$ \\ Entonces \[\frac{\dot{\hat{x}}}{\sqrt{1 + \dot{\hat{x}}}} = \lambda\] de esto se sigue 
+      \[\dot{\hat{x}}^2 = \lambda^2(1 + \dot{\hat{x}})\]
+      \[\dot{\hat{x}}^2 - \lambda^2\dot{\hat{x}} - \lambda^2 = 0\]
+
+      de aqui podemos ver que la ecuación tiene forma polinomial $r^2 - C_1 r - C_1 = 0$ el cual cuenta con soluciones 
+    \[ r_{1,2} = \frac{C_1 \pm \sqrt{{C_1}^2 + 4C_1}}{2}\]
+  \end{enumerate}
+\end{solution}
+
+\begin{exercise}
+  Hallar los valores extremos del funcional 
+  \[
+    J[x] = \int_{0}^{\pi}\dot{x}^2(t)\,dt
+  \]
+  donde $\mathcal{D} = \{x\in\mathcal{C}^1([a,b],\mathbb{R}):x(0) = x(\pi) = 0$ y $G[x] = 1\}$ y 
+  \[
+    G[x] = \int_{0}^{\pi}\dot{x}^2(t)\,dt
+  \]
+\end{exercise}
+
+\begin{exercise}
+  Sean $p$, $q$, $r:[a,b]\to\mathbb{R}$ funciones continuas y sea $J:\mathcal{D}\to\mathcal{R}$ el funcional
+  \[J[x] = \int_{a}^{b}(p(t)\dot{c}^2(t) - q(t)x^2(t))\,dt\]
+  donde $\mathcal{D} = \{x\in\mathcal{C}^1([a,b],\mathbb{R}):x(a) = x_a, \dot{x}(b) = x_b$ y $G[x] = 0\}$ con 
+  \[G[x] = \int_{a}^{b}r(t)x^2(t)\,dt - 1\]
+  Mostrar que los valores extremos del funcional son soluciones de la ecuación diferencial
+  \[
+    \frac{d}{dt}\big(p(t)\frac{dx}{dt}\big) + (p(t) + \lambda r(t))x = 0
+  \]
+  donde $\lambda$ es una constante.
+\end{exercise}
+
+\begin{exercise}
+  Sean $L,M\in\mathcal{C}^2([a,b]\times\mathbb{R}^4,\mathbb{R})$ y $J:\mathcal{D}_{x_1}\times\mathcal{D}_{x_2}\to\mathbb{R}$ el funcional definido por
+  \[
+    J[x_1,x_2] = \int_{a}^{b}L(t,x_1(t),x_2(t),\dot{x_1}(t),\dot{x_2}(t))\,dt,
+  \]
+  donde
+  \[
+  \begin{aligned}
+    & \mathcal{D}_{x_1}\times\mathcal{D}_{x_2} = \{(x_1,x_2)\in\mathcal{C}^1([a,b],\mathbb{R})\times\mathcal{C}^1([a,b],\mathbb{R}):x_k(a) = {x_a}^k\text{ y }x_k(b) = {x_b}^k \\ 
+    & \text{ para } k = 1,2 \text{ y } G[x_1,x_2] = c\},
+  \end{aligned}
+\]
+  con $c$ una constante dada y 
+  \[
+    G[x_1,x_2] = \int_{a}^{b}M(t,x_1(t),x_2(t),\dot{x_1}(t),\dot{x_2}(t))\,dt .
+  \]
+  Hallar la condición necesaria de optimalidad.
+\end{exercise}
+
+\begin{exercise}
+  Aplicar el resultado del problema anterior para hallar el valor máximo del funcional
+  \[
+    J[x_1,x_2] = \int_{a}^{b}(x_1(t)\ddot{x_2}(t) - \dot{x_1}(t)x_2(t))\,dt ,
+  \]
+  donde
+
+  \[
+  \begin{aligned}
+    & \mathcal{D}_{x_1}\times\mathcal{D}_{x_2} = \{(x_1,x_2)\in\mathcal{C}^1([a,b],\mathbb{R}\times\mathcal{C}^1([a,b],\mathbb{R}): \\
+    & \text{ donde }x_k(a) = 0 = x_k(b)\text{ para }k = 1,2\text{ y }G[x_1,x_2] = 1\},
+  \end{aligned}
+  \]
+  con
+  \[G[x_1,x_2] = \int_{a}^{b}\sqrt{\dot{x_1}^2(t) + \dot{x_2}^2(t)}\,dt.\]
+  ¿Puede establecer alguna relación entre la formulación y la solución de este problema con respecto a los resultados del Ejemplo 5.7?
+\end{exercise}
+
+\end{document}

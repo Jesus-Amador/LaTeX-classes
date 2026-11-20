@@ -23,6 +23,7 @@
 \RequirePackage{xcolor}
 \RequirePackage[most]{tcolorbox}
 \RequirePackage{hyperref}
+\RequirePackage{amssymb}
 
 \definecolor{Pantone}{rgb}{0.725,0.066,0.086}
 \definecolor{PantoneOrange}{rgb}{0.886,0.275,0.133}
