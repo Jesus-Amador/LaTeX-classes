@@ -59,17 +59,58 @@
   \]
 \end{exercise}
 
+\begin{solution}
+  Primero consideremos 
+\[\hat{G}[x] = \int_{0}^{\pi} (\dot{x}^2(t) - 1)\,dt\]
+con esto podemos considerar 
+\[\hat{F}(x) = \int_{0}^{\pi} ((\lambda_0 - \lambda_1)\dot{x}^2(t) - 1)\,dt \]
+y sea $\hat{L}(x) = (\lambda_0 - \lambda_1)\dot{x}^2(t) - 1$ entonces la ecuación de \textbf{Euler-Lagrange} esta dada por
+\[0 = \frac{\partial}{\partial x}\hat{L} - \frac{d}{\,dt}\frac{\partial}{\partial\dot{x}}\hat{L}\]
+identifiquemos que \[\frac{\partial}{\partial x}\hat{L} = 0\] y 
+\[\frac{d}{\,dt}\frac{\partial}{\partial\dot{x}}\hat{L} = \frac{d}{\,dt}(2(\lambda_0 - \lambda_1)\dot{x})\]
+entonces
+\[\frac{d}{\,dt}(2(\lambda_0 - \lambda_1)\dot{x}) = 0\]
+de donde se sigue que 
+\[2(\lambda_0 - \lambda_1)\dot{x} = k\]
+con $k\in\mathbb{R}$ por lo tanto $x(t) = \frac{k}{2(\lambda_0 - \lambda_1)}t + C_1$
+\end{solution}
+
 \begin{exercise}
   Sean $p$, $q$, $r:[a,b]\to\mathbb{R}$ funciones continuas y sea $J:\mathcal{D}\to\mathcal{R}$ el funcional
-  \[J[x] = \int_{a}^{b}(p(t)\dot{c}^2(t) - q(t)x^2(t))\,dt\]
+  \[J[x] = \int_{a}^{b}(p(t)\dot{x}^2(t) - q(t)x^2(t))\,dt\]
   donde $\mathcal{D} = \{x\in\mathcal{C}^1([a,b],\mathbb{R}):x(a) = x_a, \dot{x}(b) = x_b$ y $G[x] = 0\}$ con 
   \[G[x] = \int_{a}^{b}r(t)x^2(t)\,dt - 1\]
   Mostrar que los valores extremos del funcional son soluciones de la ecuación diferencial
   \[
-    \frac{d}{dt}\big(p(t)\frac{dx}{dt}\big) + (p(t) + \lambda r(t))x = 0
+    \frac{d}{dt}\big(p(t)\frac{dx}{dt}\big) + (q(t) + \lambda r(t))x = 0
   \]
   donde $\lambda$ es una constante.
 \end{exercise}
+
+\begin{solution}
+  \noindent
+  Como $J$ y $G$ estan dadas, entonces definamos 
+  \[\hat{F}[x] = \lambda_0J[x] + \lambda_1G[x] = \int_{a}^{b} \left(\lambda_0\left(p(t)\dot{x}^2(t) - q(t)x^2(t) \right) + \lambda_1\left(r(t)x^2(t) - \frac{1}{b-a}\right)\right)\,dt\]
+  de donde identificamos 
+  \[\hat{L} = \lambda_0\left(p(t)\dot{x}^2(t) - q(t)x^2(t) \right) + \lambda_1\left(r(t)x^2(t) - \frac{1}{b-a}\right)\]
+  con esto la ecuación de \textbf{Euler-Lagrange} esta dada por 
+  \begin{equation}\label{eq:1}
+  0 = \frac{\partial}{\partial x}\hat{L} - \frac{d}{\,dt}\frac{\partial}{\partial}\dot{x}\hat{L}
+  \end{equation}
+  con 
+  \[
+  \begin{aligned}
+    & \frac{\partial}{\partial x}\hat{L} = -2\lambda_0q(t)x(t) + 2\lambda_1r(t)x(t)\\ 
+    & \frac{\partial}{\partial\dot{x}}\hat{L} = 2\lambda_0p(t)\dot{x}(t)
+  \end{aligned}
+  \]
+  sustituyendo esto último en la ecuación~\ref{eq:1} se tiene que 
+  \begin{equation}\label{eq:2}
+  0 = -2\left(\lambda_0q(t)x(t) - \lambda_1r(t)x(t) + \frac{d}{\,dt}\left(\lambda_0p(t)\dot{x}(t)\right)\right)
+  \end{equation}
+  si $\lambda_0\neq 0$ entonces sea $\lambda = \frac{\lambda_1}{\lambda_0}$ entonces la ecuación~\ref{eq:2} se transforma en 
+  \[\frac{d}{\,dt}\left(p(t)\frac{dx}{\,dt}\right) + (q(t) - \lambda r(t))x(t) = 0\]
+\end{solution}
 
 \begin{exercise}
   Sean $L,M\in\mathcal{C}^2([a,b]\times\mathbb{R}^4,\mathbb{R})$ y $J:\mathcal{D}_{x_1}\times\mathcal{D}_{x_2}\to\mathbb{R}$ el funcional definido por
