@@ -104,10 +104,189 @@
     &\dot{x_2} = -x_1
   \end{align*}
   con la restricción $\lvert u(t)\rvert\leq 1$. Se trata de conducir al sistema de un estado
-  \[\dot{x_0} = \begin{bmatrix} 1 \\ 2 \end{bmatrix}\]
+  \[\hat{x_0} = \begin{bmatrix} 1 \\ 2 \end{bmatrix}\]
   al origen en tiempo mínimo. Demostrar que el control óptimo oscila entre $1$ y $-1$ con una alternancia como máximo.
   Si se conoce que $u(t)>0$ y que $u(T) < 0$, demostrar que el instante $t_1$ en que se produce el cambio satisface la ecucación
   \[2e^{-t_1} = 2 + e^{-T}.\]
 \end{exercise}
 
+\begin{solution}
+  Primero hay que identificar que como queremos minimizar el tiempo entonces el problema de optimización esta dado por $J[x] = b \to inf$ (o bien $J[x] = \int_{0}^{b}1\,dt$).
+  Luego notemos que 
+  \[f(x,u) = 
+    \begin{bmatrix}
+      1\footnote{ya que estamos intentando maximizar el tiempo} \\
+      x_1 + u \\ 
+      -x_1
+    \end{bmatrix}
+  \]
+  entonces el sistema conjugado se obtiene como solución de 
+  \[
+    \begin{bmatrix}
+    \dot{\Psi_0} \\ 
+    \dot{\Psi_1} \\ 
+    \dot{\Psi_2}
+  \end{bmatrix}
+  = -
+  \begin{bmatrix}
+    0 & 0 & 0 \\ 
+    0 & 1 & 0 \\ 
+    0 & -1 & 0 
+  \end{bmatrix}^{T}
+  \begin{bmatrix}
+    \Psi_0 \\ 
+    \Psi_1 \\ 
+    \Psi_2 
+  \end{bmatrix}
+  = - \begin{bmatrix}
+    0 & 0 & 0 \\ 
+    0 & 1 & -1 \\ 
+    0 & 0 & 0 
+  \end{bmatrix}
+  \begin{bmatrix}
+    \Psi_0 \\ 
+    \Psi_1 \\ 
+    \Psi_2 
+    \end{bmatrix} = - \begin{bmatrix}
+    0 \\ 
+    \Psi_1 - \Psi_2 \\ 
+    0 
+  \end{bmatrix}
+\]
+asi tenemos que 
+\[
+  \begin{aligned}
+  & \dot{\Psi_0} = 0 \\ 
+  & \dot{\Psi_1} = \Psi_2 - \Psi_1 \\ 
+  & \dot{\Psi_2} = 0 
+\end{aligned}
+\]
+de donde $\Psi_0 = C_1$ y  $\Psi_2 = C_2$ entonces $\dot{\Psi_1} = C_2 - \Psi_1$, resolviendo para esta ultima se sigue que 
+\[
+  \Psi_1 = C_3e^{-t} + C_4
+\]
+ahora el hamiltoniano dado por $\mathcal{H}(x,\Psi,u) = \Psi_0 + \Psi_1(x_1 + u ) - \Psi_2x_1 = \Psi_0 + (\Psi_1 - \Psi_2)x_1 + \Psi_1u$
+Luego, dado que $\lvert u(t)\rvert\leq 1$ entonces 
+\[
+  \hat{u} = \begin{cases}
+    -1 & \text{, si } \Psi_1>0 \\ 
+    1 & \text{, si } \Psi_1 < 0
+  \end{cases}
+\]
+además como $\Psi(s) = -\frac{\partial g}{\partial x}(x(b)) = -(1,C_3e^{-t}+C_4,C_2)^T$.
+De esto se sigue que cmo $\Psi_1u$ es quien domina el signo y ademas $\dot{\Psi_1} = -C_3e^{-t}$ es decir su derivada no cambia de signo pues $C_3$ es constante y $e^{-t} > 0$, por lo tanto el control óptimo solo puede cambiar de signo una sola vez, por lo tanto alterna entre 1 y -1 como máximo una vez.
+
+Luego si se conoce que $u(t) > 0$ y $u(T) < 0$, como ya sabemos que solo podemos cambiar una sola vez de signo entonce 
+\[u(t) = 
+  \begin{cases}
+    1 & \text{, si }0\leq t < t_1,\\ 
+    -1 & \text{, si }t_1 < t \leq T
+  \end{cases}
+\]
+como $\dot{x_2} = -x_1$ si integramos de $0$ a $T$ se sigue que $x_2(T) - x_2(0) = \int_{0}^{T}-x_1(t)\,dt$ como $x_2(0) = 2$ y $x_2(T) = 0$ entonces $\int_{0}^{T}-x(t)\,dt = -2$; luego 
+como $\dot{x_1} = x_1 + u$ entonces $\dot{x_1} - x_1 = u$ intengrando desde $0$ a $T$ con factor integrante se tiene que $e^{-t}\dot{x_1} - e^{-t}x_1 = e^{-t}u$ de donde 
+$e^{-T}x_1(T) - x_1(0) = \int_{0}^{T}e^{-t}u(t)$ como $x_1(T) = 0$, $x_1(0) = 1$ y la condición de $u(t)$ se sigue que 
+\[
+  -1 = \int_{0}^{T}e^{-t}u(t)\,dt = \int_{0}^{t_1}e^{-t}\,dt - \int_{t_1}^{T}e^{-t}\,dt = -e^{-t_1} + 1 + e^{-T} - e^{-t_1}
+\]
+de donde 
+\[-1 = -2e^{-t_1} + 1 + e^{-T}\]
+reordenando se tiene 
+\[2e^{-t_1} = 2 + e^{-T}\] 
+que es lo que se queria demostrar
+\end{solution}
+
+\begin{exercise}
+\noindent 
+Se desea conducir al sistema 
+\[
+  \begin{aligned}
+    & \dot{x_1} = x_2 \\ 
+    & \dot{x_2} = -x_2 + u 
+  \end{aligned}
+\]
+dsde el punto $(1,0)$ al $(0,0)$ en el mínimo tiempo posible, con la restricción d que $\lvert u(t)\rvert\leq 1$. Encontrar ese tiempo.
+\end{exercise}
+
+\begin{solution}
+  Primero describamos el problema d optimización como $J[x] = \int_{0}^{T}1\,dt = T\to inf$ ahora consideremos 
+  \[f(x,u) = \begin{bmatrix}1 \\ x_2 \\ -x_2 + u\end{bmatrix}\]
+  etonces e sistema cnjugado se obtiene como solución de 
+  \[
+  \begin{bmatrix}\dot{\psi_0} \\ \dot{\psi_1} \\ \dot{\psi_2}\end{bmatrix}
+  = - \begin{bmatrix}
+    0 & 0 & 0 \\ 
+    0 & 0 & 1 \\ 
+    0 & 0 & -1 
+  \end{bmatrix}^T 
+  \begin{bmatrix}
+    \psi_0 \\ \psi_1 \\ \psi_2 
+  \end{bmatrix} = - 
+  \begin{bmatrix}
+    0 & 0 & 0 \\ 
+    0 & 0 & 0 \\ 
+    0 & 1 & -1 
+  \end{bmatrix}
+  \begin{bmatrix}
+    \psi_0 \\ \psi_1 \\ \psi_2 
+  \end{bmatrix} = - 
+  \begin{bmatrix}0 \\ 0 \\ \psi_1 - \psi_2\end{bmatrix}
+  \]
+  se sigue que 
+  \[
+    \begin{aligned}
+      & \psi_0 = C_1 \\ 
+      & \psi_1 = C_2 \\ 
+      & \psi_2 = C_3e^{t} + C_2 
+    \end{aligned}
+    \]
+    luego el hamiltoniano esta dado por $\mathcal{H}(x,\psi,u) = <f(x,u),\psi> = \psi_0 + \psi_1x_2 - \psi_2(-x_2 + u) = \psi_0 + (\psi_1 - \psi_2)x_2 + \psi_2u$
+    luego \[u(t) = \begin{cases} 1 & \text{, si }\psi_2 > 0 \\ -1 & \text{, si }\psi_2 < 0\end{cases}\]
+    en este caso como $\dot{\psi_2} = C_3e^{t}$ y $e^{t} > 0 $ entonces $\psi_2$ es monotona y no cambia de signo por lo tanto solo se puede anular en un punto.
+    Ahora como $\dot{x_2} = -x_2 + u$ entonces $\dot{x_2} + x_2 = u$ usando factor integrante se sigue que $e^tx_2 = \int e^tu\,dt$ luego como $\dot{x_1} = x_2$ si integramos de $0$ a $T$ se tiene que 
+    \[x_1(T) - x_1(0) = \int{x_2(t)} \,dt\]
+    de otra forma 
+    \[\int_{0}^{T}x_2(t)\,dt = -1\] 
+    consideremos $u=1$ en ese caso 
+    \[\dot{x_2}(t) = -x_2(t) + 1\]
+    resolviendo con la condicion $x_2(0) = 0$ tenemos que 
+    \[x_2(t) = -e^{-t} + C_1 = 1 - e^{-t}\]
+    luego notemos que $1 - e^{-t} > 0$ para todo $t>0$, pero la integral es negativa, pensemos que existe un $t_1\in(0,T)$ en el que la función cambia de signo
+    todo esto significa que $x_2(t)$ es positiva en al menos un intervalo lo cual hace que $x_1$ incremente y en realidad queremos llavarlo de $1$ a $0$
+    luego en el punto en el que cambia de signo se tiene que $\dot{x_2} = -x_2(t) - 1$ y resolviendo ahora con la condicion de que en $x_2(t_1)=1-e^{-t_1}$
+    por la continuidad de $x_2$ se tiene que $x_2(t) = C_3e^{-t} - 1$ y entonces $1-e^{-t_1} = C_3e^{-t_1} - 1$ por lo tanto $C_3 = 2e^{t_1}-1$
+    de esto se concluye que 
+    \[x_2(t) = (2e^{t_1} - 1)e^{-t} - 1\]
+    de esto se sigue que dado que $x_2(T) = 0$ entonces $0 = (2e^{t_1} - 1)e^{-T} - 1$ de donde $e^T = 2e^{t_1} - 1$ de aqui sustituyendo se sigue 
+    \[x_2(t) = e^Te^{-t} - 1 = e^{T-t} - 1\]
+    ahora como $t_1 \leq t < T$ entonces $T - t > 0$ entonces $e^{T-t} > 1$ por lo tanto $x_2(t) > 0$ es decir en ningun momenton $x_2$ jamas se vuelve negativa.
+    Entonces empecemos suponiendo que en el intervalo donde $0 < t < t_1$ sucede que $u = -1$ entonces considerando la condicion inicial $x_2(0) = 0$ se tiene que 
+    \[x_2(t) = C_1e^{-t} - 1 = e^{-t} - 1\]
+    luego con $\dot{x_1}=x_2$ si sustituimos e integramos se tiene que $x_1(t) = -e^{-t} - t + C_2$ y como $x_1(0) = 1$ se tiene 
+    \[x_1(t) = -e^{-t} - t + 2\]
+    ahora para el intervalo donde $t_1 \leq t < T$ se tiene $\dot{x_2} = -x_2 + 1$ resolviendo se sigue que $x_2(t) = C_3e^{-t} + 1$
+    usando la continuidad de $x_2$ usamos la condicion $x_2(t_1) = e^{-t_1} - 1$ asi se sigue que 
+    \[e^{-t_1} - 1 = C_3e^{-t_1} + 1 \]
+    despejando se tiene que $C_3 = 1 - 2e^{t_1}$ y en consecuencia
+    \[x_2(t) = (1-2e^{t_1})e^{-t} + 1\]
+    ahora usemos la condición de $x_2(T) = 0$ entonces 
+    \[0 = (1 - 2e^{t_1})e^{-T} + 1 \]
+    de donde se sigue que $e^T = 2e^{t_1} - 1$ por lo tanto $T = \ln(2e^{t_1} - 1)$
+    ahora resolviendo $\dot{x_1} = x_2$ se sigue que 
+    \[x_1(T) - x_1(0) = -1 = \int_{0}^{T}x_2(t)\,dt = \int_{0}^{t_1}(e^{-t} - 1)\,dt + \int_{t_1}^{T} (1 + (1 - 2e^{t_1})e^{-t})\,dt\]
+    \[=[-e^{-t_1} - t_1 + 1] + [T-t_1 - (1 - 2e^{t_1})(e^{-T} - e^{-t_1})] = -e^{t_1} - t_1 + 1 + T - t_1 +e^T(e^{-T} - e^{-t_1})\]
+    \[= -e^{t_1} - 2t_1 + 2 + T - e^Te^{-t_1} = 2 - e^{t_1} - 2t_1 + T - (2e^{t_1} - 1)e^{-t_1} = -2t_1 + T\]
+    de aqui se sigue que 
+    \[T = 2t_1 - 1\] 
+    luego $\ln(2e^{t_1} - 1) = 2t_1 - 1$ sea $y = e^{t_1}$ entonces $\ln(2y - 1) = 2\ln(y) - 1$ ahora usando propiedades dl logaritmo se sigue
+    que $\ln(2y - 1) = \ln(y^2) - 1$ como $1 = \ln(e)$ entonces 
+    \[\ln(2y -1) = \ln\left(\frac{y^2}{e}\right)\]
+    de donde se sigue 
+    \[2y - 1 = \frac{y^2}{e}\]
+    \[y^2 -2ye - e = 0\]
+    de aqui se tiene que $y = \frac{2e\pm\sqrt{4e^2 - 4e}}{2} = e\pm\sqrt{e^2 - e}$ asi $t_1 = \ln(e\pm\sqrt{e^2 - e})$ ahora 
+  notemos que si $t_1 = \ln(e - \sqrt{e^2 - e})$ entonces como $0<e-\sqrt{e^2 - e <1}$ implicaria que $t_1 < 0$
+  entonces $t_1 = \ln(e - \sqrt{e^2 - e})$ pr lo tanto el valor $T$ buscado esta dado por 
+  \[T = 2(\ln(e - \sqrt{e^2 - e})) - 1\]
+  \end{solution}
 \end{document}
